@@ -5,7 +5,6 @@ from __future__ import annotations
 from collections.abc import Sequence
 
 from conftest import AgentFactory
-
 from robot_agent import Outcome, Position, ScriptedPlanner, SimRobot, ToolCall
 from robot_agent.models import Action, StepRecord
 

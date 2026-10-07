@@ -39,7 +39,10 @@ class PrintTracer:
             self._print(f"          result:  {record.observation}")
 
     def on_end(self, result: AgentResult) -> None:
-        self._print(f"END: {result.outcome.value} - {result.reason} ({len(result.steps)} steps)")
+        self._print(
+            f"END: {result.outcome.value} - {result.reason} "
+            f"({result.executed} executed, {result.blocked} blocked)"
+        )
 
 
 class NullTracer:

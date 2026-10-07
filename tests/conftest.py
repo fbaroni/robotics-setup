@@ -45,4 +45,3 @@ def make_agent(robot: SimRobot) -> AgentFactory:
         return Agent(planner, robot, toolbox, SafetyGate(toolbox.specs), NullTracer())
 
     return factory
-

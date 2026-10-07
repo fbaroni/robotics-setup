@@ -13,9 +13,7 @@ class SimRobot:
         self.sensor_timeout = sensor_timeout  # fault injection for tests
 
     def look(self) -> LookResult:
-        objects = tuple(
-            SeenObject(name, pos) for name, pos in sorted(self.world.objects.items())
-        )
+        objects = tuple(SeenObject(name, pos) for name, pos in sorted(self.world.objects.items()))
         return LookResult(robot=self.world.robot, objects=objects)
 
     def move(self, direction: Direction) -> Position:

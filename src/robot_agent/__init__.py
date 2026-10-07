@@ -4,7 +4,7 @@ from robot_agent.agent import Agent, AgentResult, Outcome
 from robot_agent.gate import GateContext, SafetyGate
 from robot_agent.hal import CollisionError, HardwareError, Robot, SensorTimeoutError
 from robot_agent.models import Direction, Finish, Position, ToolCall
-from robot_agent.planner import Planner, ScriptedPlanner
+from robot_agent.planner import GreedyPlanner, Planner, ScriptedPlanner, parse_target
 from robot_agent.sim import SimRobot
 from robot_agent.tools import Toolbox, ToolSpec, build_toolbox
 from robot_agent.trace import NullTracer, PrintTracer, Tracer
@@ -17,6 +17,7 @@ __all__ = [
     "Direction",
     "Finish",
     "GateContext",
+    "GreedyPlanner",
     "GridWorld",
     "HardwareError",
     "NullTracer",
@@ -34,4 +35,5 @@ __all__ = [
     "Toolbox",
     "Tracer",
     "build_toolbox",
+    "parse_target",
 ]

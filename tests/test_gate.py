@@ -5,8 +5,8 @@ from __future__ import annotations
 import io
 
 import pytest
-from conftest import AgentFactory
 
+from conftest import AgentFactory
 from robot_agent import (
     Agent,
     Direction,
@@ -34,7 +34,9 @@ def test_valid_move_is_approved(gate: SafetyGate) -> None:
 @pytest.mark.parametrize("direction", list(Direction))
 def test_move_into_obstacle_is_blocked(gate: SafetyGate, direction: Direction) -> None:
     clearance = {**ALL_CLEAR, direction: 0}
-    decision = gate.check(ToolCall("move", {"direction": direction.value}), ctx(clearance=clearance))
+    decision = gate.check(
+        ToolCall("move", {"direction": direction.value}), ctx(clearance=clearance)
+    )
     assert not decision.approved
     assert "wall or boundary" in decision.reason
 
@@ -56,7 +58,7 @@ def test_step_limit_is_terminal(gate: SafetyGate) -> None:
 
 def test_gate_fails_closed_on_internal_error() -> None:
     class Boom(dict[Direction, int]):
-        def get(self, *_: object) -> int:  # type: ignore[override]
+        def get(self, *_: object) -> int:
             raise RuntimeError("corrupt reading")
 
     gate = SafetyGate({"move": MOVE})
@@ -83,7 +85,11 @@ def test_trace_shows_proposal_decision_and_reason(make_agent: AgentFactory, robo
     out = io.StringIO()
     toolbox = build_toolbox(robot)
     agent = Agent(
-        ScriptedPlanner([ToolCall("fly")]), robot, toolbox, SafetyGate(toolbox.specs), PrintTracer(out)
+        ScriptedPlanner([ToolCall("fly")]),
+        robot,
+        toolbox,
+        SafetyGate(toolbox.specs),
+        PrintTracer(out),
     )
     agent.run("fly away")
     text = out.getvalue()

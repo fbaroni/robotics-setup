@@ -6,7 +6,6 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from enum import Enum
 from types import MappingProxyType
-from typing import Union
 
 
 class Direction(str, Enum):
@@ -67,11 +66,13 @@ class Finish:
     reason: str
 
 
-Action = Union[ToolCall, Finish]
+Action = ToolCall | Finish
 
 
 def _render(value: object) -> str:
-    return value.value if isinstance(value, Enum) else repr(value)
+    if isinstance(value, Enum):
+        return str(value.value)
+    return value if isinstance(value, str) else repr(value)
 
 
 # --- Observations returned by tools --------------------------------------------------
@@ -111,7 +112,7 @@ class MoveResult:
         return f"robot now @{self.position}"
 
 
-Observation = Union[LookResult, SensorReading, MoveResult]
+Observation = LookResult | SensorReading | MoveResult
 
 
 # --- Gate + trace --------------------------------------------------------------------
